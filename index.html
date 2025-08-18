@@ -46,10 +46,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(0,0,0,0.4);
-      color: white;
+      background: rgba(255, 255, 255, 0.6);
+      color: rgba(0,0,0,0.4);
       border: none;
       padding: 30px;
+      aspect-ratio: 1/1;
       cursor: pointer;
       border-radius: 50%;
       z-index: 10;
@@ -113,36 +114,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="container">
     <div class="carousel-wrapper">
       <div class="carousel" id="carousel">
-        <img src="images/image001.jpg" alt="Imagem001" loading="lazy">
-        <img src="images/image002.jpg" alt="Imagem002" loading="lazy">
-        <img src="images/image003.jpg" alt="Imagem003" loading="lazy">
-        <img src="images/image004.jpg" alt="Imagem004" loading="lazy">
-        <img src="images/image005.jpg" alt="Imagem005" loading="lazy">
-        <img src="images/image006.jpg" alt="Imagem006" loading="lazy">
-        <img src="images/image007.jpg" alt="Imagem007" loading="lazy">
-        <img src="images/image008.jpg" alt="Imagem008" loading="lazy">
-        <img src="images/image009.jpg" alt="Imagem009" loading="lazy">
-        <img src="images/image010.jpg" alt="Imagem010" loading="lazy">
-        <img src="images/image011.jpg" alt="Imagem011" loading="lazy">
-        <img src="images/image012.jpg" alt="Imagem012" loading="lazy">
-        <img src="images/image013.jpg" alt="Imagem013" loading="lazy">
-        <img src="images/image014.jpg" alt="Imagem014" loading="lazy">
-        <img src="images/image015.jpg" alt="Imagem015" loading="lazy">
-        <img src="images/image016.jpg" alt="Imagem016" loading="lazy">
-        <img src="images/image017.jpg" alt="Imagem017" loading="lazy">
-        <img src="images/image018.jpg" alt="Imagem018" loading="lazy">
-        <img src="images/image019.jpg" alt="Imagem019" loading="lazy">
-        <img src="images/image020.jpg" alt="Imagem020" loading="lazy">
-        <img src="images/image021.jpg" alt="Imagem021" loading="lazy">
-        <img src="images/image022.jpg" alt="Imagem022" loading="lazy">
-        <img src="images/image023.jpg" alt="Imagem023" loading="lazy">
-        <img src="images/image024.jpg" alt="Imagem024" loading="lazy">
-        <img src="images/image025.jpg" alt="Imagem025" loading="lazy">
-        <img src="images/image026.jpg" alt="Imagem026" loading="lazy">
-        <img src="images/image027.jpg" alt="Imagem027" loading="lazy">
-        <img src="images/image028.jpg" alt="Imagem028" loading="lazy">
-        <img src="images/image029.jpg" alt="Imagem029" loading="lazy">
-        <img src="images/image030.jpg" alt="Imagem030" loading="lazy">
       </div>
       <button class="prev" onclick="moveCarousel(-1)">&#10094;</button>
       <button class="next" onclick="moveCarousel(1)">&#10095;</button>
@@ -183,10 +154,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span class="close" onclick="closeModal()">&times;</span>
     <img class="modal-content" id="modal-img">
   </div>
-
   <script>
-    let index = 0;
     const carousel = document.getElementById("carousel");
+    const sourceImages = ["image001_xnih9v.jpg", "image002_tjavvj.jpg", "image003_m4kveh.jpg", "image004_g7z3dy.jpg", "image005_tzdaja.jpg", "image006_cozvzc.jpg", "image007_fdei5u.jpg", "image008_o5leh4.jpg", "image009_jkhpc0.jpg", "image010_psoyyz.jpg", "image011_f2yaxx.jpg", "image012_jz0j1q.jpg", "image013_uykbak.jpg", "image020_iftzgm.jpg", "image021_mjjc7y.jpg", "image022_jbzbs0.jpg", "image023_ps8lao.jpg", "image024_ohrqqr.jpg", "image025_ygdnwp.jpg", "image026_xdhfmf.jpg", "image027_mnh4zu.jpg", "image028_ukc6xo.jpg", "image029_mpktyr.jpg", "image030_q38tyz.jpg", "image031_kqu90s.jpg", "image032_zw05cx.jpg", "image033_hfvhaf.jpg", "image045_ciu2pk.jpg", "image046_q0k708.jpg", "image047_tg4y5o.jpg", "image048_j4ybyf.jpg", "image049_hxrlz0.jpg", "image060_vptfj7.jpg", "image061_twbvpc.jpg", "image062_hi0srv.jpg"];
+
+    const cloudName = "dr23qvkfd";
+
+    sourceImages.forEach(name => {
+      const imgSmall  = `https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto,w_960/${name}`;
+      const imgMedium = `https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto,w_1280/${name}`;
+      const imgLarge  = `https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto,w_1920/${name}`;
+
+      const picture = document.createElement("picture");
+      picture.innerHTML = `
+          <source media="(max-width: 1024px)" srcset="${imgSmall}">
+          <source media="(max-width: 1366px)" srcset="${imgMedium}">
+          <img src="${imgLarge}" alt="${name}" loading="lazy">
+      `;
+      carousel.appendChild(picture);
+    });
+    
+    let index = 0;
     const images = document.querySelectorAll(".carousel img");
     const modal = document.getElementById("modal");
     const modalImg = document.getElementById("modal-img");
